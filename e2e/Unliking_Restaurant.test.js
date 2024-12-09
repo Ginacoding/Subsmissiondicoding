@@ -1,28 +1,26 @@
-Feature('Unliking Restaurant');
-
-Before(({ I }) => {
-  I.amOnPage('/#/favorites');
-});
+Feature('Unliking Restaurants');
 
 Scenario('unliking a liked restaurant', async ({ I }) => {
-  I.see('Tidak ada resto yang difavoritkan', '#card-list'); // Memastikan pesan muncul saat tidak ada resto di favorit
+  I.amOnPage('/#/favorites');
+  I.waitForElement('#card-list', 10);
+  I.see('Tidak ada resto difavoritkan', '#card-list');
 
   I.amOnPage('/');
-
-  I.seeElement('.restaurant-item__title a');
+  I.waitForElement('.restaurant-item__title a', 10);
   I.click(locate('.restaurant-item__title a').first());
-
-  I.seeElement('#likeButton');
+  
+  I.waitForElement('#likeButton', 10);
   I.click('#likeButton');
-
+  
   I.amOnPage('/#/favorites');
+  I.waitForElement('.restaurant-item', 10);
   I.seeElement('.restaurant-item');
-
+  
   I.click(locate('.restaurant-item__title a').first());
-
-  I.seeElement('#likeButton');
+  I.waitForElement('#likeButton', 10);
   I.click('#likeButton');
-
+  
   I.amOnPage('/#/favorites');
-  I.see('Tidak ada resto yang difavoritkan', '#card-list'); // Verifikasi setelah unliking
+  I.waitForElement('#card-list', 10);
+  I.see('Tidak ada resto yang difavoritkan', '#card-list');
 });

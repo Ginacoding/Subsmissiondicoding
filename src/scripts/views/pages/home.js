@@ -6,7 +6,11 @@ const Home = {
     return `
       <section class="jumbroton-wrapper">
         <div class="image-wrapper">
-          <img src="./images/heros/hero-image_2.jpg" width="450" alt="FoodMap Bandung Hero Image" />
+          <picture>
+            <source srcset="./images/heros/hero-image_2-small.jpg" media="(max-width: 600px)">
+            <source srcset="./images/heros/hero-image_2-large.jpg" media="(min-width: 601px)">
+            <img src="./images/heros/hero-image_2-large.jpg" width="450" alt="FoodMap Bandung Hero Image" />
+          </picture>
           <h1 class="font-bold">Welcome To FoodMap Bandung</h1>
         </div>
       </section>

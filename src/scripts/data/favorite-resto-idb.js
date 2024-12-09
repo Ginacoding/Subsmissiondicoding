@@ -21,7 +21,9 @@ const FavoriteRestoIdb = {
     return (await dbPromise).getAll(OBJECT_STORE_NAME);
   },
   async putRestaurant(restaurant) {
-    if (!Object.prototype.hasOwnProperty.call(restaurant, 'id')) {
+    // Pastikan restoran memiliki properti yang valid sebelum menyimpan
+    if (!restaurant || !restaurant.id || !restaurant.pictureId || !restaurant.name || !restaurant.rating || !restaurant.city || !restaurant.description) {
+      console.error('Invalid restaurant object:', restaurant);
       return;
     }
 

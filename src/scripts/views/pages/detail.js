@@ -23,7 +23,6 @@ const Detail = {
           </form>
      </div>
      <div id="likeButtonContainer"></div>
-     
     `;
   },
 
@@ -35,34 +34,58 @@ const Detail = {
     const formReview = document.querySelector('.form-review');
 
     const url = UrlParser.parseActiveUrlWithoutCombiner();
-    const response = await RestaurantApiSource.getRestaurantDetail(url.id);
+    
+    // Menampilkan indikator loading
+    loaderElement.classList.remove('hidden');
 
-    loaderElement.classList.add('hidden');
+    try {
+      const response = await RestaurantApiSource.getRestaurantDetail(url.id);
 
-    formReview.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      e.stopPropagation();
+      // Menyembunyikan indikator loading setelah data dimuat
+      loaderElement.classList.add('hidden');
+      
+      // Menampilkan detail restoran
+      contentElement.innerHTML += TemplateCreator.DetailRestaurant(response);
 
-      const data = {
-        id: url.id,
-        name: inputName.value,
-        review: inputReview.value,
-      };
-      await RestaurantApiSource.mutateAddReview(data);
-    });
+      // Menangani form ulasan
+      formReview.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        e.stopPropagation();
 
-    LikeButtonInitiator.init({
-      likeButtonContainer: document.querySelector('#likeButtonContainer'),
-      restaurant: {
-        id: response.id,
-        pictureId: response.pictureId,
-        name: response.name,
-        city: response.city,
-        rating: response.rating,
-        description: response.description,
-      },
-    });
-    contentElement.innerHTML += TemplateCreator.DetailRestaurant(response);
+        const data = {
+          id: url.id,
+          name: inputName.value,
+          review: inputReview.value,
+        };
+
+        try {
+          await RestaurantApiSource.mutateAddReview(data);
+          alert('Ulasan berhasil dikirim!');
+          inputName.value = '';  // Mengosongkan form
+          inputReview.value = '';  // Mengosongkan form
+        } catch (error) {
+          console.error('Error adding review:', error);
+          alert('Gagal mengirimkan ulasan!');
+        }
+      });
+
+      // Menginisialisasi tombol like
+      LikeButtonInitiator.init({
+        likeButtonContainer: document.querySelector('#likeButtonContainer'),
+        restaurant: {
+          id: response.id,
+          pictureId: response.pictureId,
+          name: response.name,
+          city: response.city,
+          rating: response.rating,
+          description: response.description,
+        },
+      });
+    } catch (error) {
+      console.error('Error loading restaurant details:', error);
+      loaderElement.classList.add('hidden');
+      contentElement.innerHTML = '<p>Gagal memuat detail restoran. Coba lagi nanti.</p>';
+    }
   },
 };
 
