@@ -6,10 +6,10 @@ const Home = {
     return `
       <section class="jumbroton-wrapper">
         <div class="image-wrapper">
-          <picture>
-            <source srcset="./images/heros/hero-image_2-small.jpg" media="(max-width: 600px)">
-            <source srcset="./images/heros/hero-image_2-large.jpg" media="(min-width: 601px)">
-            <img src="./images/heros/hero-image_2-large.jpg" width="450" alt="FoodMap Bandung Hero Image" />
+          <picture id="hero-image">
+            <source srcset="./images/heros/hero-image_3.jpg" media="(max-width: 600px)">
+            <source srcset="./images/heros/hero-image_2.jpg" media="(min-width: 601px)">
+            <img src="image-default.jpg" alt="fallback image" loading="lazy">
           </picture>
           <h1 class="font-bold">Welcome To FoodMap Bandung</h1>
         </div>
@@ -19,20 +19,26 @@ const Home = {
         <loader-element></loader-element>
         <div id="card-list" class="card-container"></div>
       </section>
-     `;
+    `;
   },
 
   async afterRender() {
     const restaurants = document.querySelector('#card-list');
     const loaderElement = document.querySelector('loader-element');
 
-    const response = await RestaurantApiSource.getRestaurantList();
+    try {
+      const response = await RestaurantApiSource.getRestaurantList();
 
-    loaderElement.classList.add('hidden');
+      loaderElement.classList.add('hidden');
 
-    response.forEach((restaurant) => {
-      restaurants.innerHTML += TemplateCreator.RestaurantItem(restaurant);
-    });
+      response.forEach((restaurant) => {
+        restaurants.innerHTML += TemplateCreator.RestaurantItem(restaurant);
+      });
+    } catch (error) {
+      console.error(error);
+      loaderElement.classList.add('hidden');
+      restaurants.innerHTML = '<p>Failed to load restaurants.</p>';
+    }
   },
 };
 

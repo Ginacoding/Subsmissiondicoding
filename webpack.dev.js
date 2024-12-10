@@ -8,6 +8,8 @@ module.exports = merge(common, {
   devServer: {
     static: path.resolve(__dirname, "dist"),
     open: true,
+    historyApiFallback: true,  // Menangani rute aplikasi SPA
+    hot: true,
     port: 9000,
     client: {
       overlay: {
