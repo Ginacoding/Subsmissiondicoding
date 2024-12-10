@@ -14,21 +14,21 @@ const FavoriteRestoIdb = {
     if (!id) {
       return;
     }
-
     return (await dbPromise).get(OBJECT_STORE_NAME, id);
   },
+
   async getAllRestaurant() {
     return (await dbPromise).getAll(OBJECT_STORE_NAME);
   },
+
   async putRestaurant(restaurant) {
     // Pastikan restoran memiliki properti yang valid sebelum menyimpan
-    if (!restaurant || !restaurant.id || !restaurant.pictureId || !restaurant.name || !restaurant.rating || !restaurant.city || !restaurant.description) {
-      console.error('Invalid restaurant object:', restaurant);
+    if (!restaurant || !restaurant.id) {
       return;
     }
-
     return (await dbPromise).put(OBJECT_STORE_NAME, restaurant);
   },
+
   async deleteRestaurant(id) {
     return (await dbPromise).delete(OBJECT_STORE_NAME, id);
   },
