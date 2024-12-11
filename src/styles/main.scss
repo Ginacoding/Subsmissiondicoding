@@ -76,6 +76,13 @@ body {
   }
 }
 
+.restaurant-item{
+  max-height: 600px; /* bisa disesuaikan kembali */
+}
+.restaurant-item img{
+  width: 100%;
+}
+
 /*
   AppBar
 */

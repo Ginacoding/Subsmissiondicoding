@@ -3,7 +3,7 @@ import CONFIG from '../../globals/config';
 const RestaurantItem = (restaurant) => `
     <div class="restaurant-item">
         <a href="#/detail/${restaurant.id}" class="restaurant-item__link">
-            <img class="lazyload" class="restaurant-item__header" src="${CONFIG.IMAGE_URL}/${restaurant.pictureId}" alt="${restaurant.name}">
+            <img class="lazyload" class="restaurant-item__header" data-src="${CONFIG.IMAGE_URL}/${restaurant.pictureId}" alt="${restaurant.name}">
             <div class="restaurant-item__content">
                 <div class="restaurant-item__header__rating">
                     <p>⭐️ <span class="restaurant-item__header__rating__score">${restaurant.rating}</span></p>
