@@ -7,12 +7,8 @@ const Home = {
       <section class="jumbotron-wrapper">
         <div class="image-wrapper">
           <picture id="hero-image">
-            <!-- Gambar untuk layar kecil (mobile) -->
-            <source srcset="./dist/hero-image_2-small.jpg" media="(max-width: 600px)">
-            <!-- Gambar untuk layar besar (desktop) -->
-            <source srcset="./dist/hero-image_2-large.jpg" media="(min-width: 601px)">
-            <!-- Fallback gambar jika gambar tidak ditemukan -->
-            <img src="./dist/hero-image_2-large.jpg" alt="FoodMap Bandung" loading="lazy">
+              <source srcset="./hero-image_2-small.jpg" media="(max-width: 600px)">
+              <img src="./hero-image_2-large.jpg" alt="FoodMap Bandung" loading="lazy">
           </picture>
           <h1 class="font-bold">Welcome To FoodMap Bandung</h1>
         </div>
